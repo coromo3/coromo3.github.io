@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<!-- TCG仕入れの入口ページ。アプリ(Apps Script)をこのページの枠の中で開くので、Google のバーが出ない。
+     URL: ?k=アクセスキー(スプレッドシートのメニュー「TCG仕入れ」で出るもの)。秘密の値はこのファイルに書かない。
+     梱包依頼(packing/)とは無関係の別ページ。 -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TCG仕入れ">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<title>TCG仕入れ</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #f3f4f6; }
+  #app { position: relative; z-index: 1; display: block; border: 0; width: 100%; height: 100%; background: transparent; }
+  #wait { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; margin: 0;
+    font: 700 16px/1.6 -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; color: #5f6872; }
+  #wait[hidden] { display: none; }
+  #msg { font: 15px/1.6 sans-serif; color: #1f2328; padding: 24px 16px; }
+</style>
+</head>
+<body>
+<div id="wait" role="status">読み込み中…</div>
+<iframe id="app" title="TCG仕入れ" allow="camera; clipboard-write"></iframe>
+<p id="msg" hidden></p>
+<script>
+(function () {
+  var DEPLOY_ID = 'AKfycbyNp8_QyciOwo7sjLEjtYZUBO2zAJZpwgu431cMw2nMyqFEqNvI2Iu3c1m5YsS6khqw';
+  var q = new URLSearchParams(location.search);
+  var k = q.get('k') || '';
+  if (!/^[A-Za-z0-9_-]{20,200}$/.test(k)) {
+    var m = document.getElementById('msg');
+    m.textContent = 'URLが正しくありません。渡されたURL(オーナーはスプレッドシートのメニュー「TCG仕入れ」から出るURL)をそのまま開いてください。';
+    m.hidden = false;
+    document.getElementById('wait').hidden = true;
+    document.getElementById('app').hidden = true;
+    return;
+  }
+  var app = document.getElementById('app');
+  app.addEventListener('load', function () { document.getElementById('wait').hidden = true; });
+  app.src = 'https://script.google.com/macros/s/' + DEPLOY_ID + '/exec?k=' + encodeURIComponent(k);
+})();
+</script>
+</body>
+</html>

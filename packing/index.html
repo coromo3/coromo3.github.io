@@ -7,14 +7,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="梱包依頼">
+<meta name="apple-mobile-web-app-title" content="ハコロモ">
 <meta name="referrer" content="no-referrer">
-<!-- ホーム画面のアイコン・名前(D-257)。manifest に start_url を書かない: 書くと ?s=…&k=… が落ちて開けなくなる -->
+<!-- ホーム画面のアイコン・名前(D-257 → D-258 で「ハコロモ」)。manifest に start_url を書かない: 書くと ?s=…&k=… が落ちて開けなくなる -->
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#f4f5f7">
-<title>梱包依頼</title>
+<title>ハコロモ</title>
 <style>
   html, body { margin: 0; height: 100%; background: #f4f5f7; }
   #app { position: relative; z-index: 1; display: block; border: 0; width: 100%; height: 100%; background: transparent; }
@@ -29,15 +29,19 @@
   #wait .g { width: 160px; height: 6px; border-radius: 999px; background: #e3e6ea; overflow: hidden; position: relative; }
   #wait .g::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 40%; border-radius: 999px; background: #1a73e8; animation: run 1.2s ease-in-out infinite; }
   #wait .s { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  /* ハコロモのマーク(D-258): 1本の羽衣が箱を描いて、また描く */
+  #wait .m { width: 64px; height: 64px; }
+  #wait .m path { stroke-dasharray: 100; animation: draw 2.2s ease-in-out infinite; }
+  @keyframes draw { 0% { stroke-dashoffset: 100; } 55%, 80% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -100; } }
   @keyframes hop { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
   @keyframes run { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
-  @media (prefers-reduced-motion: reduce) { #wait i, #wait .g::after { animation: none; } #wait .g::after { width: 100%; opacity: .4; } }
+  @media (prefers-reduced-motion: reduce) { #wait i, #wait .g::after, #wait .m path { animation: none; } #wait .g::after { width: 100%; opacity: .4; } }
   #msg { font: 15px/1.6 sans-serif; color: #1f2328; padding: 24px 16px; }
 </style>
 </head>
 <body>
-<div id="wait" role="status"><span class="s">梱包依頼を開いています</span><span class="t" aria-hidden="true"><i style="animation-delay:0.00s">N</i><i style="animation-delay:0.07s">o</i><i style="animation-delay:0.14s">w</i><i class="sp" style="animation-delay:0.21s"></i><i style="animation-delay:0.28s">L</i><i style="animation-delay:0.35s">o</i><i style="animation-delay:0.42s">a</i><i style="animation-delay:0.49s">d</i><i style="animation-delay:0.56s">i</i><i style="animation-delay:0.63s">n</i><i style="animation-delay:0.70s">g</i><i class="d" style="animation-delay:0.77s">.</i><i class="d" style="animation-delay:0.84s">.</i><i class="d" style="animation-delay:0.91s">.</i></span><span class="g" aria-hidden="true"></span></div>
-<iframe id="app" title="梱包依頼" allow="clipboard-write"></iframe>
+<div id="wait" role="status"><span class="s">ハコロモを開いています</span><svg class="m" viewBox="0 0 180 180" aria-hidden="true"><defs><linearGradient id="wh" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f59ab5"/><stop offset="1" stop-color="#7c8cf0"/></linearGradient></defs><path pathLength="100" d="M14 156 C28 146 34 110 40 74 L86 52 L132 74 L86 96 L40 74 L40 120 L86 142 L132 120 L132 74 M86 96 V142 M132 74 C146 64 154 44 168 30" fill="none" stroke="url(#wh)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="t" aria-hidden="true"><i style="animation-delay:0.00s">N</i><i style="animation-delay:0.07s">o</i><i style="animation-delay:0.14s">w</i><i class="sp" style="animation-delay:0.21s"></i><i style="animation-delay:0.28s">L</i><i style="animation-delay:0.35s">o</i><i style="animation-delay:0.42s">a</i><i style="animation-delay:0.49s">d</i><i style="animation-delay:0.56s">i</i><i style="animation-delay:0.63s">n</i><i style="animation-delay:0.70s">g</i><i class="d" style="animation-delay:0.77s">.</i><i class="d" style="animation-delay:0.84s">.</i><i class="d" style="animation-delay:0.91s">.</i></span><span class="g" aria-hidden="true"></span></div>
+<iframe id="app" title="ハコロモ" allow="clipboard-write"></iframe>
 <p id="msg" hidden></p>
 <script>
 (function () {
